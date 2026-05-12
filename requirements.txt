@@ -1,0 +1,29 @@
+# Core
+torch>=2.1.0
+transformers>=4.45.0
+datasets>=2.18.0
+accelerate>=0.28.0
+
+# PEFT (LoRA)
+peft>=0.10.0
+
+# Training
+trl>=0.8.0
+
+# Quantization
+auto-gptq>=0.7.0
+autoawq>=0.2.0
+bitsandbytes>=0.43.0
+
+# Deployment
+vllm>=0.4.0
+
+# Evaluation
+lm-eval>=0.4.0
+
+# Utils
+wandb>=0.16.0
+pyyaml>=6.0
+rich>=13.0
+pandas>=2.0
+matplotlib>=3.8

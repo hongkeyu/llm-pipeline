@@ -1,0 +1,42 @@
+# SFT Training Configuration
+# Model: Qwen3-0.6B + LoRA
+
+model:
+  name: "Qwen/Qwen3-0.6B"
+  torch_dtype: "bfloat16"
+  attn_implementation: "flash_attention_2"  # 如果 GPU 支持
+
+lora:
+  r: 16                    # LoRA rank — 消融实验对比 8/16/32/64
+  lora_alpha: 32           # 通常设为 2*r
+  lora_dropout: 0.05
+  target_modules:          # Qwen3 的 attention + MLP
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  task_type: "CAUSAL_LM"
+
+training:
+  output_dir: "outputs/sft"
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4  # effective batch = 16
+  learning_rate: 2.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.05
+  max_seq_length: 2048
+  bf16: true
+  logging_steps: 10
+  save_strategy: "epoch"
+  eval_strategy: "epoch"
+  report_to: "wandb"
+  gradient_checkpointing: true    # 省显存
+
+data:
+  train_file: "data/sft/train.jsonl"
+  eval_file: "data/sft/eval.jsonl"
+  # 格式: {"messages": [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]}

@@ -1,0 +1,26 @@
+# Models & checkpoints
+outputs/
+*.bin
+*.safetensors
+*.gguf
+*.pt
+
+# Data (large files)
+data/sft/*.jsonl
+data/dpo/*.jsonl
+
+# Python
+__pycache__/
+*.pyc
+.eggs/
+
+# Env
+.env
+venv/
+
+# Wandb
+wandb/
+
+# IDE
+.vscode/
+.idea/
